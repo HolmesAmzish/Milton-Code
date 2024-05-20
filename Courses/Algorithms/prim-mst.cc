@@ -1,18 +1,8 @@
-/*
- * Program: prim-mst.cc
- * Date: 2024.05.19
- * Author: Nulla
- * Repository: Milton-Code
- * Description: Find the minimum spanning tree by Prim's algorithm
- */
-
 #include <iostream>
 #include <vector>
 #include <climits>
 #include <unordered_map>
-
 using namespace std;
-
 const int INF = INT_MAX;
 
 struct Vertex {
@@ -57,44 +47,40 @@ public:
 
     void PrimMst(char start) {
         int n = vertices.size();
-        vertices[vertex_map[start]].distance = 0;
-
+        int start_index = vertex_map[start];
+        vertices[start_index].distance = 0;
         int total_weight = 0;
 
-        for (int count = 0; count < n - 1; count++) {
+        for (int count = 0; count < n; count++) {
             int min_dist = INF, min_node = -1;
+
+            // Find the node who has the min distance
             for (int current_node = 0; current_node < n; current_node++) {
-                if (!vertices[current_node].selected && vertices[current_node].distance < min_dist) {
+                if (!vertices[current_node].selected
+                && vertices[current_node].distance < min_dist) {
                     min_dist = vertices[current_node].distance;
                     min_node = current_node;
                 }
             }
-
-            if(min_node == -1) {
-                cerr << "Graph is disconnected!" << endl;
-                return;
-            }
-
             vertices[min_node].selected = true;
 
+            // Print the choosen node
             if(vertices[min_node].parent_index != -1) {
-                cout << vertices[vertices[min_node].parent_index].value << vertices[min_node].value << " " << adj_matrix[min_node][vertices[min_node].parent_index] << endl;
+                cout << vertices[vertices[min_node].parent_index].value
+                << vertices[min_node].value << " "
+                << adj_matrix[min_node][vertices[min_node].parent_index] << endl;
                 total_weight += adj_matrix[min_node][vertices[min_node].parent_index];
             }
 
+            // Update information for next scan
             for (int i = 0; i < n; i++) {
-                if (adj_matrix[min_node][i] != INF && 
-                    !vertices[i].selected && 
-                    adj_matrix[min_node][i] < vertices[i].distance) {
+                if (adj_matrix[min_node][i] != INF
+                && !vertices[i].selected
+                && adj_matrix[min_node][i] < vertices[i].distance) {
                     vertices[i].parent_index = min_node;
                     vertices[i].distance = adj_matrix[min_node][i];
                 }
             }
-        }
-
-        if(vertices[vertex_map[start]].parent_index != -1) {
-            cout << vertices[vertex_map[start]].value << vertices[vertices[vertex_map[start]].parent_index].value << " " << adj_matrix[vertex_map[start]][vertices[vertex_map[start]].parent_index] << endl;
-            total_weight += adj_matrix[vertex_map[start]][vertices[vertex_map[start]].parent_index];
         }
     
         cout << total_weight << endl;
