@@ -15,26 +15,31 @@ using namespace std;
 
 const int INFTY = INT_MAX;
 
+typedef unordered_map<char, int> DistanceMap;
+typedef unordered_map<char, unordered_map<char, int>> IndexMatrix;
+
 class Graph {
     public:
-    void addEdge(const char& from, const char& to, int weight);
-    unordered_map<char, int> dijkstra(const char& start);
+    void addEdge(char from, char to, int weight);
+    DistanceMap dijkstra(char start);
 
     private:
-    unordered_map<char, unordered_map<char, int>> adj_list;
+    IndexMatrix adj_list;
 };
 
-void Graph::addEdge(const char& from, const char& to, int weight) {
+void Graph::addEdge(char from, char to, int weight) {
     adj_list[from][to] = weight;
     if(adj_list.find(to) == adj_list.end()) {
         adj_list[to] = unordered_map<char, int>();
     }
 }
 
-unordered_map<char, int> Graph::dijkstra(const char& start) {
-    unordered_map<char, int> distances;
-    for (const auto& node : adj_list) {
-        distances[node.first] = INFTY;
+DistanceMap Graph::dijkstra(char start) {
+    DistanceMap distances;
+
+    // Initial adjancency matrix
+    for (auto edge : adj_list) {
+        distances[edge.first] = INFTY;
     }
     distances[start] = 0;
 
@@ -61,25 +66,35 @@ unordered_map<char, int> Graph::dijkstra(const char& start) {
             }
         }
     }
+
+    // Sort the result
+    for(int i = 0; i < distances.size() - 1; i++) {
+        for (int j = i + 1; j < distances.size(); j++) {
+            if (distances[i] > distances[j]) {
+                swap(distances[i], distances[j]);
+            }
+        }
+    }
+
     return distances;
 }
 
 int main() {
     Graph graph;
-    string vertices; cin >> vertices;
+    string vertices;
+    cin >> vertices;
 
+    // Enter edges information
     char from, to;
     int weight;
-
     while (cin >> from && from != '#') {
         cin >> to >> weight;
         graph.addEdge(from, to, weight);
     }
 
+    // Find min distances
     char start; cin >> start;
-
-    unordered_map<char, int> distances = graph.dijkstra(start);
-
+    DistanceMap distances = graph.dijkstra(start);
     for (const auto& vertex : vertices) {
         if (vertex != start) {
             cout << start << vertex << ' ' << distances[vertex] << endl;
