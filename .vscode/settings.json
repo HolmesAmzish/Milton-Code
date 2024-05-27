@@ -1,6 +1,8 @@
 {
     "C_Cpp.errorSquiggles": "enabled",
     "files.associations": {
-        "ostream": "cpp"
+        "ostream": "cpp",
+        "limits": "cpp",
+        "unordered_map": "cpp"
     }
 }

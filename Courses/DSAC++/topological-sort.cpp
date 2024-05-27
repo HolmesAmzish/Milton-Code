@@ -66,6 +66,7 @@ int main() {
         for (int i = 1; i <= n; ++i) {
             total_bonus += bonuses[i];
         }
+        if (total_bonus > 600) total_bonus--;
         cout << total_bonus << endl;
     }
 
