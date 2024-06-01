@@ -88,17 +88,14 @@ int main() {
     char start;
     cin >> start;
     DistanceMap distances = graph.dijkstra(start);
-
-    // Convert DistanceMap to vector<pair<char, int>>
-    vector<pair<char, int>> sortedDistances(distances.begin(), distances.end());
+    vector<pair<char, int>> sorted_distances(distances.begin(), distances.end());
 
     // Sort the vector by value
-    sort(sortedDistances.begin(), sortedDistances.end(), [](const pair<char, int>& a, const pair<char, int>& b) {
+    sort(sorted_distances.begin(), sorted_distances.end(), [](const pair<char, int>& a, const pair<char, int>& b) {
         return a.second < b.second;
     });
 
-    // Output sorted distances
-    for (const auto& pair : sortedDistances) {
+    for (const auto& pair : sorted_distances) {
         if (pair.first != start) {
             cout << start << pair.first << ' ' << pair.second << endl;
         }

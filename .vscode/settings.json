@@ -3,6 +3,7 @@
     "files.associations": {
         "ostream": "cpp",
         "limits": "cpp",
-        "unordered_map": "cpp"
+        "unordered_map": "cpp",
+        "iostream": "cpp"
     }
 }
