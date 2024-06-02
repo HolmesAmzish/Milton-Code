@@ -21,17 +21,16 @@ struct BinaryTreeNode {
 };
 
 class BinarySearchTree {
-    private:
+    public:
     BinaryTreeNode* root;
     int tree_size;
 
-    public:
     BinarySearchTree() {
         root = nullptr;
         tree_size = 0;
     }
 
-    BinaryTreeNode* insertNode(int value) {
+    void insertNode(int value) {
         // Create a new node
         BinaryTreeNode* new_node = new BinaryTreeNode(value);
 
@@ -39,6 +38,8 @@ class BinarySearchTree {
         if (root == nullptr) {
             root = new_node;
             tree_size++;
+            printTree(root);
+            cout << endl;
             return;
         }
 
@@ -56,19 +57,25 @@ class BinarySearchTree {
         // Connect the new node
         if (value < parent->value)
             parent->left_child = new_node;
-        else
+        else if (value > parent->value)
             parent->right_child = new_node;
         tree_size++;
+        
+        // Print the tree while construction, I won't write in this way without the condition
+        printTree(root);
+        cout << endl;
     }
 
+    // Build the tree in a loop and print the process
     BinaryTreeNode* buildTree(vector<int> sequence) {
         for (int value : sequence)
             insertNode(value);
+        return root;
     }
 
     void printTree(BinaryTreeNode* root) {
         if (root != nullptr) {
-            cout << root;
+            cout << root->value;
             if (root->left_child != nullptr || root->right_child != nullptr) {
                 cout << '(';
                 printTree(root->left_child);
@@ -76,20 +83,33 @@ class BinarySearchTree {
                 printTree(root->right_child);
                 cout << ')';
             }
-        } else {
-            return;
+        }
+    }
+
+    void find(int key) {
+        while (root != nullptr) {
+            cout << root->value << ' ';
+            if (key == root->value)
+                break;
+            
+            if(key < root->value)
+                root = root->left_child;
+            else if (key > root->value)
+                root = root->right_child;
         }
     }
 };
 
 int main() {
     vector<int> sequence;
-    int input;
+    int input, key;
     while (cin >> input && input != -1)
         sequence.push_back(input);
+    cin >> key;
     BinarySearchTree tree;
-    tree.buildTree(sequence);
-    tree.printTree();
+    BinaryTreeNode* root = tree.buildTree(sequence);
+    //tree.printTree(root);
+    tree.find(key);
     
     return 0;
 }
