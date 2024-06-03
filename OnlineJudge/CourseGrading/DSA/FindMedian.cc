@@ -1,10 +1,4 @@
-/*
- * Program: find-median.cpp
- * Date: 2024.06.02
- * Author: Nulla
- * Description: Find the median of two sorted arrays of equal length.
- */
-
+// .....
 #include <iostream>
 #include <vector>
 using namespace std;
