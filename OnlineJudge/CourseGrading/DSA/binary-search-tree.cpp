@@ -61,7 +61,7 @@ class BinarySearchTree {
             parent->right_child = new_node;
         tree_size++;
         
-        // Print the tree while construction, I won't write in this way without the condition
+        // Print the tree while construction
         printTree(root);
         cout << endl;
     }

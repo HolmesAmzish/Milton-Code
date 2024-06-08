@@ -1,5 +1,4 @@
 """
-Contest: Codeforces Round 928 Div. 4
 Problem: Vlad and the Best of Five
 Date: 2024.06.04
 Author: Nulla

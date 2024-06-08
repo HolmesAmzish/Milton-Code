@@ -55,7 +55,6 @@ int main() {
     }
 
     int result = findMedian(array, number);
-    label1:
     cout << "mid=" << result << endl;
 
     return 0;
