@@ -19,5 +19,6 @@
         "regex": "cpp",
         "valarray": "cpp",
         "new": "cpp"
-    }
+    },
+    "cmake.configureOnOpen": false
 }
